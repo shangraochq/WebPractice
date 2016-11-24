@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		img{border: none;padding: 0; margin: 0;}
+		body,ul,li{padding: 0; margin: 0; list-style: none;font-size: 0px;}
+		.pic{width: 300px; height: 330px;}
+		.pic{display: none;}
+		.show{display: block;}
+		div{position: relative; width: 300px;}
+		.left{position: absolute; left: 5px; top: 140px; opacity: 0.6;}
+		.right{position: absolute; right: 5px; top: 140px; opacity: 0.6;}
+		.left:hover, .right:hover{opacity: 1;}
+		ul{width: 160px; margin: 20px auto;}
+		ul:after{content: '';display: block; clear: both;}
+		li{background: url(图4.png) no-repeat; height: 20px; float: left; margin-left:  20px; width: 20px; position: relative;}
+		.active{background: url(图5.png) no-repeat;}
+		li img{position: absolute; width: 50px; height: 55px;top: -60px; display: none;}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			var Oli = document.getElementsByTagName('li');
+			var Oleft = document.getElementsByClassName('left')[0];
+			var Oright = document.getElementsByClassName('right')[0];
+			var Opic = document.getElementById('pic').getElementsByTagName('img');
+			var num = 0;
+			/*function show(a){
+				Opic[a].style.display = "block";
+				Oli[a].className = 'active';
+			}
+			function hidden(a){
+				Opic[a].style.display = "none";
+				Oli[a].className = '';
+			}*/
+			function show(a,b,c){
+				Opic[a].style.display = b;
+				Oli[a].className = c;
+			} //将函数show(a)和函数hidden(a)封装在一起了
+			function Obutt(){
+				for(var i = 0; i<Opic.length; i++){
+					if (Opic[i].index != num) {
+						show(i,'none','');
+					}
+					else show(i,'block','active');
+				}
+			}
+
+			//hover缩略图
+			for(var i = 0;i<Oli.length; i++){
+				Oli[i].index = i;
+				Oli[i].onmouseover = function(){
+					this.getElementsByTagName('img')[0].style.display = 'block';
+				}
+				Oli[i].onmouseout = function(){
+					this.getElementsByTagName('img')[0].style.display = 'none';
+				}
+			}
+
+			//左右图标点击
+			for(var i =0; i<Opic.length; i++){
+				Opic[i].index = i;
+			}
+			Oright.onclick = function(){
+				num++;
+				if (num == 4) {
+					num = 0;
+				}
+				Obutt()
+			}
+			Oleft.onclick = function(){
+				num--;
+				if (num == -1) {
+					num = 3;
+				}
+				Obutt()
+			}
+
+			//圆圈点击事件
+			for(var i= 0;i<Oli.length; i++){
+				Oli[i].onclick = function(){
+					for(var j =0;j<Opic.length;j++){
+						if (j != this.index) {
+							show(j,'none','')
+						}
+						else show(j,'block','active');
+					}
+					num = this.index;
+				}
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div>
+	<div id="pic">
+		<img src="1.png" class="pic show">
+		<img src="2.png" class="pic">
+		<img src="3.png" class="pic">
+		<img src="4.png" class="pic">
+	</div>
+		<img src="图片3.png" class="left">
+		<img src="图片2.png" class="right">
+		<ul>
+		<li class="active"><img src="1.png"></li>
+		<li><img src="2.png"></li>
+		<li><img src="3.png"></li>
+		<li><img src="4.png"></li>
+	</ul>
+		
+	</div>
+	
+</body>
+</html>
