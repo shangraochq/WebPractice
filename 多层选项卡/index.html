@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		bod,ul,li,img{padding: 0; margin: 0;}
+		img{border: none; vertical-align: top; width: 600px; height: 440px;}
+		ul,li{list-style: none; cursor: pointer;}
+		div{display: none; position: relative; float: left;}
+		.visible{display: block;}
+		#sideBar{float: left;}
+		#sideBar li{width: 150px; height: 110px; text-align: center; line-height: 100px; background: #ccc;}
+		#sideBar .init{background: #fff;}
+		.bottomBar{position: absolute; width: 100%; bottom: 0; left: 0}
+		.bottomBar:after{content: ""; display: block; clear: both;}
+		.bottomBar li{float: left; height: 50px; line-height: 50px;text-align: center; width: 25%; background-color: rgba(0,0,0,0.5); color: #fff;}
+		.bottomBar .init1{background-color: red;}
+		.bottomBar .li{width: 25%;}
+		.bottomBar .comet{width: 50%;}
+		.bottomBar .huang{width: 33.33%;}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			var OSideLi = document.getElementById('sideBar').getElementsByTagName('li');
+			var ODiv = document.getElementsByTagName('div');
+			var OBtmUl = document.getElementsByClassName('bottomBar');
+			var OView = document.getElementsByClassName('view');
+			var Ohuang = document.getElementsByClassName('huang');
+			var Oli = document.getElementsByClassName('li');
+			var Ocomet = document.getElementsByClassName('comet');
+			var view = ['风景1.jpg','风景2.jpg','风景3.jpg','风景4.jpg'];
+			var huang = ['黄1.jpg','黄2.jpg','黄3.jpg'];
+			var li = ['李1.jpg','李2.jpg','李3.jpg','李4.jpg'];
+			var comet = ['动漫1.jpg','动漫2.jpg'];
+			function fn1(obj,arr){
+				for(var i = 0; i<obj.length; i++){
+					obj[i].index = i;
+					obj[i].onmouseover = function(){
+						this.parentNode.parentNode.getElementsByTagName('img')[0].src = arr[this.index];
+						for(var j=0; j<arr.length; j++){
+							obj[j].style.backgroundColor = "rgba(0,0,0,0.5)";
+						}
+						this.style.backgroundColor = "red";
+					}
+				}
+			}
+			for(var i =0; i<OSideLi.length; i++){
+				OSideLi[i].index = i;
+				OSideLi[i].onmouseover = function(){
+					for(var j = 0; j<OSideLi.length; j++){
+						ODiv[j].className = "";
+						OSideLi[j].style.backgroundColor = "#ccc";
+					}
+					ODiv[this.index].className = "visible";
+					this.style.backgroundColor = "#fff";
+				}
+			}
+			fn1(OView,view);
+			fn1(Ohuang,huang);
+			fn1(Oli,li);
+			fn1(Ocomet,comet);
+		}
+	</script>
+</head>
+<body>
+	<ul id="sideBar">
+		<li class="init">风景</li>
+		<li>黄婷婷</li>
+		<li>李艺彤</li>
+		<li>动漫</li>
+	</ul>
+	<div class="visible">
+		<img src="风景1.jpg">
+		<ul class="bottomBar">
+			<li class="view init1">风景1</li>
+			<li class="view">风景2</li>
+			<li class="view">风景3</li>
+			<li class="view">风景4</li>
+		</ul>
+	</div>
+	<div>
+		<img src="黄1.jpg">
+		<ul class="bottomBar">
+			<li class="huang init1">黄婷婷1</li>
+			<li class="huang">黄婷婷2</li>
+			<li class="huang">黄婷婷3</li>
+		</ul>
+	</div>
+	<div>
+		<img src="李1.jpg">
+		<ul class="bottomBar">
+			<li class="li init1">李艺彤1</li>
+			<li class="li">李艺彤2</li>
+			<li class="li">李艺彤3</li>
+			<li class="li">李艺彤4</li>
+		</ul>
+	</div>
+	<div>
+		<img src="动漫1.jpg ">
+		<ul class="bottomBar">
+			<li class="comet init1">动漫1</li>
+			<li class="comet">动漫2</li>
+		</ul>
+	</div>
+</body>
+</html>
