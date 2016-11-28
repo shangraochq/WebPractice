@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body{font-size: 0;}
+		span{font-size: 30px;}
+		.tiny{font-size: 16px;}
+		img{width: 30px; height: 30px; vertical-align: bottom; cursor: pointer;padding-left: 3px;}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			var OImg = document.getElementsByTagName('img');
+			var oSpan = document.getElementsByTagName('span')[1];
+			function fn1(a,b,c){
+				oSpan.innerHTML = a;
+				for(var i=0; i<OImg.length; i++){
+					OImg[i].src= "white.png";
+					}
+				for(var i=0; i<=c; i++){
+					OImg[i].src= b;
+				}
+			}
+			function fn2(a,b,c){
+				oSpan.innerHTML = a;
+				for(var i=0; i<=c; i++){
+					OImg[i].src= b;
+				}
+				for(var j = 0; j<OImg.length; j++){
+					OImg[j].onmouseout = function(){
+						oSpan.innerHTML = a;
+						for(var i=0; i<OImg.length; i++){
+						OImg[i].src= "white.png";
+						}
+						for(var i=0; i<=c; i++){
+						OImg[i].src= b;
+						}
+					}
+				}
+			}
+			for(var i = 0; i<OImg.length; i++){
+				OImg[i].index = i;
+				OImg[i].onmouseover = function(){
+					switch(this.index){
+						case 0: 
+							fn1("很差","gray.png",this.index);
+							break;
+						case 1: 
+							fn1("较差","gray.png",this.index);
+							break;
+						case 2: 
+							fn1("较好","yellow.png",this.index);
+							break;
+						case 3:
+							fn1("很好","yellow.png",this.index);
+							break;
+						case 4:
+							fn1("非常好","yellow.png",this.index);
+							break;
+					}
+				}
+				OImg[i].onmouseout = function(){
+					for(var i=0; i<=this.index; i++){
+						OImg[i].src= "white.png";
+					}
+					oSpan.innerHTML = "小提示：点击星星可以评价";
+				}
+				OImg[i].onclick = function(){
+					var that = this.index;
+					switch(this.index){
+						case 0: 
+							fn2("很差","gray.png",this.index);
+							//把这里改成所有的IMG的onmouseout
+							break;
+						case 1: 
+							fn2("较差","gray.png",this.index);					
+							break;
+						case 2: 
+							fn2("较好","yellow.png",this.index);
+							break;
+						case 3:
+							fn2("很好","yellow.png",this.index);
+							break;
+						case 4:
+							fn2("非常好","yellow.png",this.index);
+							break;
+					}
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<span>总体评分:</span>
+		<img src="white.png">
+		<img src="white.png">
+		<img src="white.png">
+		<img src="white.png">
+		<img src="white.png">
+		<span class="tiny">小提示：点击星星可以评价</span>
+	</div>
+</body>
+</html>
