@@ -21,11 +21,13 @@
 	</style>
 	<script type="text/javascript">
 		window.onload = function(){
+			var OWrap = document.getElementById('wrap')
 			var Oli = document.getElementsByTagName('li');
 			var Oleft = document.getElementsByClassName('left')[0];
 			var Oright = document.getElementsByClassName('right')[0];
 			var Opic = document.getElementById('pic').getElementsByTagName('img');
 			var num = 0;
+			var timer = null;
 			/*function show(a){
 				Opic[a].style.display = "block";
 				Oli[a].className = 'active';
@@ -46,7 +48,13 @@
 					else show(i,'block','active');
 				}
 			}
-
+			function fn1(){
+				num++;
+				if (num == 4) {
+					num = 0;
+				}
+				Obutt()
+			}
 			//hover缩略图
 			for(var i = 0;i<Oli.length; i++){
 				Oli[i].index = i;
@@ -58,17 +66,19 @@
 				}
 			}
 
+			//自动轮播
+			timer = setInterval(fn1,1000);
+			OWrap.onmouseover = function(){
+				clearInterval(timer);
+			}
+			OWrap.onmouseout = function(){
+				timer = setInterval(fn1,1000);
+			}
 			//左右图标点击
 			for(var i =0; i<Opic.length; i++){
 				Opic[i].index = i;
 			}
-			Oright.onclick = function(){
-				num++;
-				if (num == 4) {
-					num = 0;
-				}
-				Obutt()
-			}
+			Oright.onclick = fn1;
 			Oleft.onclick = function(){
 				num--;
 				if (num == -1) {
@@ -94,21 +104,21 @@
 	</script>
 </head>
 <body>
-	<div>
-	<div id="pic">
-		<img src="1.png" class="pic show">
-		<img src="2.png" class="pic">
-		<img src="3.png" class="pic">
-		<img src="4.png" class="pic">
-	</div>
+	<div id="wrap">
+		<div id="pic">
+			<img src="1.png" class="pic show">
+			<img src="2.png" class="pic">
+			<img src="3.png" class="pic">
+			<img src="4.png" class="pic">
+		</div>
 		<img src="图片3.png" class="left">
 		<img src="图片2.png" class="right">
 		<ul>
-		<li class="active"><img src="1.png"></li>
-		<li><img src="2.png"></li>
-		<li><img src="3.png"></li>
-		<li><img src="4.png"></li>
-	</ul>
+			<li class="active"><img src="1.png"></li>
+			<li><img src="2.png"></li>
+			<li><img src="3.png"></li>
+			<li><img src="4.png"></li>
+		</ul>
 		
 	</div>
 	
