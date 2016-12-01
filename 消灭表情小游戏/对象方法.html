@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+	html,body,p,div{
+		padding: 0;
+		margin: 0;
+	}
+	#header{
+		text-align: center;
+	}
+	#header span {
+		line-height: 2em;
+	}
+	#play {
+		background: #444;
+		border: 1px solid #222;
+		padding: 4px;
+		color: #fff;
+		cursor: pointer;
+	}
+	#notice {
+		display: none;
+	}
+	#container {
+		position: relative;
+		margin: auto;
+		height: 400px;
+		width: 800px;
+		
+	}
+	#box {
+		position: relative;
+		border: 1px solid #000;
+		width: 100%;
+		height: 100%;
+		overflow-y: hidden;
+	}
+	#emoticon {
+		position: absolute;
+		left: 0;
+		top: -50px;
+		cursor: pointer;
+
+	}
+	
+	#end {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 200px;
+		height: 50px;
+		margin: auto;
+		color: red;
+		display: none;
+	}
+	#count {
+		position: absolute;
+		left: -120px;
+		top: 0;
+		width: 100px;
+		background: #4caf50;
+		padding: 10px;
+
+	}
+	
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h2>你的鼠标有多快？</h2>
+		<p>游戏说明：点击开始，点击随机掉下的表情，不要让它掉下去！！！</p>
+
+		<span id="play">开始</span>
+		<span id="notice" >游戏进行中……</span>
+	</div>
+	<div id="container">
+		<div id="box">
+			<img id="emoticon" src="img/0.png" />
+			<div id="end"><h1>game over</h1></div>
+		</div>
+		<div id="count">
+			<p>得分：<span>0</span></p>
+			<p>失分：<span>0</span></p>
+		</div>
+	</div>
+<script>
+	window.onload = function () {
+		todo.play();
+		
+	}
+	var todo = {};
+	todo.play = function  () {
+		var p = document.getElementById('play');
+		var notice = document.getElementById('notice');
+		p.on = false;
+		p.onclick = function  () {
+				
+				this.style.display = "none";
+				notice.style.display = "inline";
+				todo.drop();
+		}
+	}
+
+	
+	
+	todo.drop = function () {
+		var count = document.getElementById('count');
+		count.getElementsByTagName('span')[0].innerHTML = '0';
+		count.getElementsByTagName('span')[1].innerHTML = '0';
+		var over = document.getElementById('end');
+		over.style.display= 'none';
+		todo.begin();
+	}
+
+	todo.counter = function (goal,lose) {
+		var count = document.getElementById('count');
+		var g = count.getElementsByTagName('span')[0];
+		var l = count.getElementsByTagName('span')[1];
+		g.innerHTML = goal;
+		l.innerHTML = lose;
+		todo.begin();
+	}
+
+	todo.randomLeft = function () {
+		return Math.round(Math.random()*600 +100);
+	}
+
+	todo.randomSrc = function () {
+		return Math.round(Math.random()*5);
+	}
+
+	todo.begin = function () {
+
+		clearInterval(t);
+		var arr = ["http://cdn.res.w3cfuns.com/images/emoticon/qq/36@2x.png","http://cdn.res.w3cfuns.com/images/emoticon/qq/2@2x.png","http://cdn.res.w3cfuns.com/images/emoticon/qq/19@2x.png","http://cdn.res.w3cfuns.com/images/emoticon/qq/23@2x.png","http://cdn.res.w3cfuns.com/images/emoticon/qq/29@2x.png","http://cdn.res.w3cfuns.com/images/emoticon/qq/4@2x.png"]
+		var em = document.getElementById('emoticon');
+		em.style.top = -50 + 'px';
+		em.style.left = todo.randomLeft()+'px';
+		em.src = arr[todo.randomSrc()];
+
+		var t = null;
+		var top = -50;
+		var count = document.getElementById('count');
+		var g = Number(count.getElementsByTagName('span')[0].innerHTML);
+		var l = Number(count.getElementsByTagName('span')[1].innerHTML);
+
+		t = setInterval(function () {
+			top += (g+1);
+			if(top >= 400){
+				clearInterval(t);
+				l++;
+				todo.counter(g,l);
+			}
+			if(l == 3){
+				clearInterval(t);
+				top = -50;
+				todo.end();
+			}
+			em.style.top = top + 'px';
+			console.log(top);
+		},100);
+
+		(function () {
+			em.onclick = function () {
+				clearInterval(t);
+				g++;
+				todo.counter(g,l);
+			}
+		})();
+	}
+
+	todo.end = function  () {
+		var p = document.getElementById('play');
+		var notice = document.getElementById('notice');
+		p.style.display = "inline";
+		notice.style.display = "none";
+		var over = document.getElementById('end');
+		over.style.display= 'block';
+	}
+</script>
+</body>
+</html>
