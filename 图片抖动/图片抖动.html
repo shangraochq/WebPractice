@@ -8,7 +8,7 @@ img { position:absolute; top:200px; left:300px; width:180px; }
 #img1 { left:100px; }
 </style>
 
-<script src="mover.js"></script>
+
 <script>
 window.onload = function () {
 	var oImg1 = document.getElementById('img1');
@@ -43,12 +43,10 @@ window.onload = function () {
 				endFn && endFn();
 			}
 		}, 50);
-	
-	
 }
 };
 
-
+function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; }
 </script>
 
 </head>

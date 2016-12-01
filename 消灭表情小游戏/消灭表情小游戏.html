@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	html,body,p,div{
+		padding: 0;
+		margin: 0;
+	}
+	body{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+	#header{
+		text-align: center;
+	}
+	#header span {
+		line-height: 2em;
+	}
+	#play {
+		background: #444;
+		border: 1px solid #222;
+		padding: 4px;
+		color: #fff;
+		cursor: pointer;
+	}
+	#notice {
+		display: none;
+	}
+	#container {
+		position: absolute;
+		left: 50%;
+		top: 120px;
+		margin-left: -400px;
+		height: 400px;
+		width: 800px;
+		
+	}
+	#box {
+		position: relative;
+		border: 1px solid #000;
+		width: 100%;
+		height: 100%;
+		overflow-y: hidden;
+	}
+	#emoticon {
+		position: absolute;
+		left: 0;
+		top: -50px;
+		cursor: pointer;
+
+	}
+	
+	#end {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 200px;
+		height: 50px;
+		margin: auto;
+		color: red;
+		display: none;
+	}
+	#count {
+		position: absolute;
+		left: -120px;
+		top: 0;
+		width: 100px;
+		background: #4caf50;
+		padding: 10px;
+
+	}
+	
+	</style>
+</head>
+<body>
+	<div id="header">
+		<h2>消灭表情</h2>
+		<p>游戏说明：点击开始，点击随机掉下的表情，不要让它掉下去！！！</p>
+
+		<span id="play">开始</span>
+		<span id="notice" >游戏进行中……</span>
+	</div>
+	<div id="container">
+		<div id="box">
+			<img id="emoticon" src="img/1.png" />
+			<div id="end"><h1>game over</h1></div>
+		</div>
+		<div id="count">
+			<p>得分：<span>0</span></p>
+			<p>失分：<span>0</span></p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var OP = document.getElementById('play');
+		var ONotice = document.getElementById('notice');
+		var count = document.getElementById('count');
+		OP.onclick = function(){
+			OP.style.display = "none";
+			ONotice.style.display = "inline";
+			init();
+		}
+		function init(){
+			count.getElementsByTagName('span')[0].innerHTML = "0";
+			count.getElementsByTagName('span')[1].innerHTML = "0";
+			document.getElementById('end').style.display = "none";
+			process();
+		}
+		function countNum(goal,lose){
+			count.getElementsByTagName('span')[0].innerHTML = goal;
+			count.getElementsByTagName('span')[1].innerHTML = lose;
+			process();
+		}
+		function process(){
+			var arr = ["img/1.png","img/2.png","img/3.png","img/4.png","img/5.png","img/6.png"];
+			var timer = null;
+			var top = -50;
+			var emotion = document.getElementById('emoticon');
+			var Box = document.getElementById('container');
+			var goal = parseInt(count.getElementsByTagName('span')[0].innerHTML);
+			var lose = parseInt(count.getElementsByTagName('span')[1].innerHTML);
+			emoticon.style.top = top +"px";
+			emoticon.style.left = Math.random()*700 + 50 +"px";
+			emoticon.src = arr[Math.round(Math.random()*5)];
+			clearInterval(timer);
+			timer = setInterval(function(){
+				top += (goal + 1)*0.1;
+				if (lose===3) {
+					clearInterval(timer);
+					end();
+				}else{
+					emoticon.style.top = top +"px";
+				}
+				if (top>=400) {
+					clearInterval(timer); 
+					lose++;
+					shake(Box, "top");
+					countNum(goal,lose);
+				}
+				
+				
+			},10);
+
+			
+			emoticon.onclick = function () {
+				console.log(2);
+				clearInterval(timer);
+				goal++;
+				emoticon.src = "img/qq.png";
+				shake(emoticon, "left");
+				setTimeout(function(){
+					countNum(goal,lose);
+				},600);
+				console.log(1);
+			}
+		
+
+		}
+		function end(){
+			var Oend = document.getElementById('end');
+			OP.style.display = "inline";
+			ONotice.style.display = "none";
+			Oend.style.display = "block";
+		}
+		function shake ( obj, attr, endFn ) {
+			var pos = parseInt( getStyle(obj,attr) );
+			var arr = [];			// 20, -20, 18, -18 ..... 0
+			var num = 0;
+			var timer = null;
+			for ( var i=10; i>0; i-=2 ) {
+				arr.push( i, -i );
+			}
+			arr.push(0);
+			clearInterval( obj.timer );
+			obj.timer = setInterval(function (){
+				obj.onclick = null;
+				obj.style[attr] = pos + arr[num] + 'px';
+				num++;
+				if ( num === arr.length ) {
+					clearInterval( obj.timer );
+					endFn && endFn();
+				}
+			}, 50);
+		}
+		function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; }
+	</script>
+</body>
+</html>
