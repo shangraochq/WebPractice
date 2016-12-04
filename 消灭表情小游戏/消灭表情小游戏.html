@@ -152,11 +152,9 @@
 				clearInterval(timer);
 				goal++;
 				emoticon.src = "img/qq.png";
-				shake(emoticon, "left");
-				setTimeout(function(){
+				shake(emoticon, "left", function(){
 					countNum(goal,lose);
-				},600);
-				console.log(1);
+				});
 			}
 		
 
