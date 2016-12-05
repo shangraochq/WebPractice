@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+img { position:absolute; top:200px; left:300px; width:180px; }
+#img1 { left:100px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+<img id="img1" src="img/4.jpg" />
+<img id="img2" src="img/5.jpg" />
+<script>
+	window.onload = function(){
+		var shake1 = new Shake('img1');
+		var shake2 = new Shake("img2");
+	}
+	
+	function Shake(id){
+		var that = this;
+		this.oImg = document.getElementById(id);
+		this.oImg.onclick = function(){
+			that.fnShake(this);
+		}
+	}
+
+	Shake.prototype.fnShake = function(Obj){
+		console.log(2);
+		shake( Obj, 'left', this, function(){
+			shake( Obj, 'top' , this);
+		});
+	}
+	
+	
+		
+	
+	function shake ( obj, attr, intc, endFn ) {
+		var pos = parseInt( getStyle(obj,attr) );
+		var arr = [];			// 20, -20, 18, -18 ..... 0
+		var num = 0;
+		var timer = null;
+		console.log(1);
+		for ( var i=20; i>0; i-=2 ) {
+			arr.push( i, -i );
+		}
+		arr.push(0);
+		clearInterval( obj.timer );
+		obj.timer = setInterval(function (){
+			obj.onclick = null;
+			obj.style[attr] = pos + arr[num] + 'px';
+			num++;
+			if ( num === arr.length ) {
+				clearInterval( obj.timer );
+				obj.onclick = intc.fnShake;
+				endFn && endFn();
+			}
+		}, 50);
+}
+
+	function getStyle ( obj, attr ) { 
+		return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; 
+	}
+</script>
+</body>
+</html>

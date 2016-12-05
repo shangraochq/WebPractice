@@ -18,9 +18,9 @@ window.onload = function () {
 	oImg2.onclick = fnShake;
 	
 	function fnShake() {
-		var _this = this;
-		shake( _this, 'left', function(){
-			shake( _this, 'top' );
+		var that = this;
+		shake( this, 'left', function(){
+			shake( that, 'top' );
 		});
 	}
 	function shake ( obj, attr, endFn ) {
@@ -32,13 +32,13 @@ window.onload = function () {
 			arr.push( i, -i );
 		}
 		arr.push(0);
-		clearInterval( obj.shake );
-		obj.shake = setInterval(function (){
+		clearInterval( obj.timer);
+		obj.timer= setInterval(function (){
 			obj.onclick = null;
 			obj.style[attr] = pos + arr[num] + 'px';
 			num++;
 			if ( num === arr.length ) {
-				clearInterval( obj.shake );
+				clearInterval( obj.timer);
 				obj.onclick = fnShake;
 				endFn && endFn();
 			}
