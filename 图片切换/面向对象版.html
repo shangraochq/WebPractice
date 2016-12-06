@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		img{border: none;padding: 0; margin: 0;}
+		body,ul,li{padding: 0; margin: 0; list-style: none;font-size: 0px;}
+		.pic{width: 300px; height: 330px;}
+		.pic{display: none;}
+		.show{display: block;}
+		div{position: relative; width: 300px;}
+		.left{position: absolute; left: 5px; top: 140px; opacity: 0.6;}
+		.right{position: absolute; right: 5px; top: 140px; opacity: 0.6;}
+		.left:hover, .right:hover{opacity: 1;}
+		ul{width: 160px; margin: 20px auto;}
+		ul:after{content: '';display: block; clear: both;}
+		li{background: url(图4.png) no-repeat; height: 20px; float: left; margin-left:  20px; width: 20px; position: relative;}
+		.active{background: url(图5.png) no-repeat;}
+		li img{position: absolute; width: 50px; height: 55px;top: -60px; display: none;}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			new PicTab();
+		}
+		function PicTab(){
+			this.OWrap = document.getElementById('wrap');
+			this.ORight = getClass(this.OWrap, 'right')[0];
+			this.OLeft = getClass(this.OWrap, 'left')[0];
+			this.Opic = document.getElementById('pic').getElementsByTagName('img');
+			this.Oli = document.getElementsByTagName('li');
+			this.timer = null;
+			var that = this;
+			this.num = 0;
+			for(var i =0; i<this.Opic.length; i++){
+				this.Opic[i].index = i;
+				this.Oli[i].index = i;
+			}
+			this.ORight.onclick = function(){
+				that.rightMove();
+			}
+			this.OLeft.onclick = function(){
+				that.leftMove();
+			}
+			this.OWrap.onmouseover = function(){
+				clearInterval(that.timer);
+			}
+			this.OWrap.onmouseout = function(){
+				that.autoPlay();
+			}
+			for(var j = 0; j<this.Opic.length; j++){
+				this.Oli[j].onclick = function(){
+					that.dotClk(this);
+				}
+				this.Oli[j].onmouseover = function(){
+					that.dotMueor(this);
+				}
+				this.Oli[j].onmouseout = function(){
+					that.dotMueout(this);
+				}
+			}
+			this.autoPlay();
+		}
+		PicTab.prototype.rightMove = function(){
+			this.num++;
+			if (this.num == 4) {
+				this.num = 0;
+			}
+			this.judge();
+		}
+		PicTab.prototype.leftMove = function(){
+			this.num--;
+			if (this.num == -1) {
+				this.num = 3;
+			}
+			this.judge();
+		}
+		PicTab.prototype.judge = function(){
+			for(var i = 0; i<this.Opic.length; i++){
+				if (this.Opic[i].index != this.num) {
+					this.show(i,'none','');
+				}
+				else this.show(i,'block','active');
+			}
+		}
+		PicTab.prototype.show = function(a,b,c){
+			this.Opic[a].style.display = b;
+			this.Oli[a].className = c;
+		}
+		PicTab.prototype.dotClk = function(obj){
+			for(var j = 0; j < this.Oli.length; j++){
+				if (j != obj.index) {
+					this.show(j,'none','')
+				}
+				else this.show(j,'block','active');
+			}
+			this.num = obj.index;
+		}
+		PicTab.prototype.dotMueor = function(obj){
+			for(var i = 0;i<this.Oli.length; i++){
+				this.Oli[i].getElementsByTagName('img')[0].style.display = 'none';
+			}
+			obj.getElementsByTagName('img')[0].style.display = 'block';
+		}
+		PicTab.prototype.dotMueout = function(obj){
+			obj.getElementsByTagName('img')[0].style.display = 'none';
+		}
+		PicTab.prototype.autoPlay = function(){
+			var that  = this;
+			this.timer = setInterval(function(){
+				that.rightMove();
+			}, 1000);
+		}
+		function getClass(oParten, oClass){
+			var child = oParten.getElementsByTagName('*');
+			var arr = [];
+			var re = new RegExp('\\b'+oClass+'\\b', 'i');
+			for(var i =0; i < child.length; i++){
+				if (re.test(child[i].className)) {
+					arr.push(child[i]);
+				}
+			}
+			return arr;
+		}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="pic">
+			<img src="1.png" class="pic show">
+			<img src="2.png" class="pic">
+			<img src="3.png" class="pic">
+			<img src="4.png" class="pic">
+		</div>
+		<img src="图片3.png" class="left">
+		<img src="图片2.png" class="right">
+		<ul>
+			<li class="active"><img src="1.png"></li>
+			<li><img src="2.png"></li>
+			<li><img src="3.png"></li>
+			<li><img src="4.png"></li>
+		</ul>
+		
+	</div>
+</body>
+</html>
