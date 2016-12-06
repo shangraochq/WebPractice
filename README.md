@@ -1,2 +1,2 @@
 # WebPractice
-This repository is used for storing my web practce
+This repository is used for storing my web practce.
