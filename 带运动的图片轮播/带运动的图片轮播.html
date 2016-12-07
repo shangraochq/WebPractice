@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body,li,ul,img{padding: 0; margin: 0;}
+		li,ul{list-style: none;}
+		img{border: 0; vertical-align: top;}
+		div{width: 692px; margin: 0 auto; position: relative; margin-top: 60px; overflow: hidden;height: 450px;}
+		.clear:after{content: ""; display: block; clear: both;}
+		#img_list{height: 389px;  width: 3460px; position: absolute; top: 0; left: 0;}
+		#img_list li{float: left;}
+		#dot{position: absolute; left: 280px; top: 400px;}
+		#dot li{width: 20px; height: 20px; background: url(images/dot.jpg) no-repeat; float: left; padding-left: 10px;}
+		#dot .active{background: url(images/dot_act.jpg) no-repeat;}
+	</style>
+	<script type="text/javascript" src = "myMove.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			var obj1 = new AutoPlay();
+		}
+		function AutoPlay(){
+			var that = this;
+			this.Div = document.getElementsByTagName('div')[0];
+			this.List = document.getElementById('img_list');
+			this.OUl = document.getElementById('dot');
+			this.OLi = this.OUl.getElementsByTagName('li');
+			this.num = 0;
+			this.timer = null;
+			this.Div.onmouseover = function(){
+				clearInterval(that.timer);
+			}
+			this.Div.onmouseout = function(){
+				that.autoplay();
+			}
+			for(var i = 0; i < this.OLi.length; i++){
+				this.OLi[i].index = i;
+				this.OLi[i].onclick = function(){
+					that.num = this.index;
+					that.tab(this);
+				}
+			}
+			this.autoplay();
+		}
+		AutoPlay.prototype.tab = function(obj){
+			
+			move(this.List, "left", -(this.num*692));
+			for(var j = 0; j < this.OLi.length; j++){
+				this.OLi[j].className = "";
+			}
+			obj.className = "active";
+		}
+		AutoPlay.prototype.autoplay = function(){
+			var that = this;
+			this.timer = setInterval(function(){
+				that.num++;
+				that.num > 4 ? that.num = 0 : that.num = that.num;
+				that.tab(that.OLi[that.num]);
+			},2000)
+		}
+	</script>
+</head>
+<body>
+<div class="clear">
+	<ul id="img_list" class="clear">
+		<li><img src="images/1.jpg"></li>
+		<li><img src="images/2.jpg"></li>
+		<li><img src="images/3.jpg"></li>
+		<li><img src="images/4.jpg"></li>
+		<li><img src="images/5.jpg"></li>
+	</ul>
+	<ul id="dot" class = "clear">
+		<li class="active"></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+</body>
+</html>
