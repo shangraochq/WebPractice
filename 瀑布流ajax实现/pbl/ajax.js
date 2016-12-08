@@ -5,7 +5,17 @@ function ajax(method, url, data, success) {
 	} catch (e) {
 		xhr = new ActiveXObject('Microsoft.XMLHTTP');
 	}
-	
+	xhr.onreadystatechange = function() {
+		
+		if ( xhr.readyState == 4 ) {
+			if ( xhr.status == 200 ) {
+				success && success(xhr.responseText);
+			} else {
+				alert('出错了,Err：' + xhr.status);
+			}
+		}
+		
+	}
 	if (method == 'get' && data) {
 		url += '?' + data;
 	}
@@ -18,15 +28,5 @@ function ajax(method, url, data, success) {
 		xhr.send(data);
 	}
 	
-	xhr.onreadystatechange = function() {
-		
-		if ( xhr.readyState == 4 ) {
-			if ( xhr.status == 200 ) {
-				success && success(xhr.responseText);
-			} else {
-				alert('出错了,Err：' + xhr.status);
-			}
-		}
-		
-	}
+
 }
