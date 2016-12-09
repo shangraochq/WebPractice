@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#q {width: 300px; height: 30px; padding: 5px; border:1px solid #f90; font-size: 16px;}
+#ul1 {border:1px solid #f90; width: 310px; margin: 0;padding: 0; display: none;}
+li a { line-height: 30px; padding: 5px; text-decoration: none; color: black; display: block;}
+li a:hover{ background: #f90; color: white; }
+</style>
+<script>
+function myApi(data) {
+	
+	var oUl = document.getElementById('ul1');
+	var html = '';
+	if (data.result.length) {
+		oUl.style.display = 'block';
+		for (var i=0; i<data.result.length; i++) {
+			html += '<li><a target="_blank" href="https://www.so.com/s?ie=utf-8&shb=1&src=&q='+data.result[i].word+'">'+ data.result[i].word +'</a></li>';//各个API返回的接口不同，处理方法也不同
+		}
+		oUl.innerHTML = html;
+	} else {
+		oUl.style.display = 'none';
+	}
+	
+}
+window.onload = function() {
+	
+	var oQ = document.getElementById('q');
+	var oUl = document.getElementById('ul1');
+	
+	oQ.onkeyup = function() {
+		
+		if ( this.value != '' ) {
+			var oScript = document.createElement('script');
+			oScript.src = 'https://sug.so.360.cn/suggest?callback=myApi&encodein=utf-8&encodeout=utf-8&format=json&fields=word,obdata&word='+this.value;
+			document.body.appendChild(oScript);
+		} else {
+			oUl.style.display = 'none';
+		}
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<input type="text" id="q" />
+	<ul id="ul1"></ul>
+</body>
+</html>
