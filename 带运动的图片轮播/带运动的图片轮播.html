@@ -44,8 +44,7 @@
 			this.autoplay();
 		}
 		AutoPlay.prototype.tab = function(obj){
-			
-			move(this.List, "left", -(this.num*692));
+			move(this.List, {"left": -(this.num*692)});
 			for(var j = 0; j < this.OLi.length; j++){
 				this.OLi[j].className = "";
 			}
