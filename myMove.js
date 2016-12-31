@@ -18,8 +18,6 @@
 function getStyle ( obj, attr ) { return obj.currentStyle?obj.currentStyle[attr] : getComputedStyle( obj )[attr]; }
 
 */
-
-
 //缓冲运动，封装了图片淡入淡出
 function move(obj,json,endFn){
             
