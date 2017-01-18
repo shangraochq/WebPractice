@@ -97,18 +97,16 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		function game(){
-
-		}
-		this.OP = document.getElementById('play');
-		this.ONotice = document.getElementById('notice');
-		this.count = document.getElementById('count');
-		this.goal = parseInt(count.getElementsByTagName('span')[0].innerHTML);
-		this.lose = parseInt(count.getElementsByTagName('span')[1].innerHTML);
-		this.arr = ["img/1.png","img/2.png","img/3.png","img/4.png","img/5.png","img/6.png"];
-		this.emotion = document.getElementById('emoticon');
-		this.Box = document.getElementById('container');
-		this.Oend = document.getElementById('end');
+		
+		OP = document.getElementById('play');
+		ONotice = document.getElementById('notice');
+		count = document.getElementById('count');
+		goal = parseInt(count.getElementsByTagName('span')[0].innerHTML);
+		lose = parseInt(count.getElementsByTagName('span')[1].innerHTML);
+		arr = ["img/1.png","img/2.png","img/3.png","img/4.png","img/5.png","img/6.png"];
+		emotion = document.getElementById('emoticon');
+		Box = document.getElementById('container');
+		Oend = document.getElementById('end');
 		OP.onclick = function(){
 			OP.style.display = "none";
 			ONotice.style.display = "inline";
@@ -152,7 +150,6 @@
 
 			
 			emoticon.onclick = function () {
-				console.log(2);
 				clearInterval(timer);
 				goal++;
 				emoticon.src = "img/qq.png";
