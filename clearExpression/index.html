@@ -101,8 +101,8 @@
 		OP = document.getElementById('play');
 		ONotice = document.getElementById('notice');
 		count = document.getElementById('count');
-		goal = parseInt(count.getElementsByTagName('span')[0].innerHTML);
-		lose = parseInt(count.getElementsByTagName('span')[1].innerHTML);
+		var goal = 0;
+		var lose = 0;
 		arr = ["img/1.png","img/2.png","img/3.png","img/4.png","img/5.png","img/6.png"];
 		emotion = document.getElementById('emoticon');
 		Box = document.getElementById('container');
@@ -115,6 +115,8 @@
 		function init(){
 			count.getElementsByTagName('span')[0].innerHTML = "0";
 			count.getElementsByTagName('span')[1].innerHTML = "0";
+			goal = 0;
+			lose = 0;
 			document.getElementById('end').style.display = "none";
 			process();
 		}
@@ -131,7 +133,7 @@
 			emoticon.src = arr[Math.round(Math.random()*5)];
 			clearInterval(timer);
 			timer = setInterval(function(){
-				top += (goal + 1)*0.1;
+				top += (goal + 10)*0.1;
 				if (lose===3) {
 					clearInterval(timer);
 					end();
